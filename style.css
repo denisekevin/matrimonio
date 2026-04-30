@@ -673,7 +673,7 @@ button {
   z-index: 999;
 
   /* 👇 ANIMAZIONE */
-  opacity: 0;
+  opacity: 1;
   transform: translateY(80px); /* parte da sotto */
   pointer-events: none;
 
