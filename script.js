@@ -5,7 +5,7 @@ window.addEventListener("load", function () {
 const btn = document.querySelector(".floating-btn");
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {  // 👈 dopo il logo
+  if (window.scrollY > 300) {
     btn.classList.add("show");
   } else {
     btn.classList.remove("show");
