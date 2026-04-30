@@ -5,10 +5,23 @@ window.addEventListener("load", function () {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
   const btn = document.querySelector(".floating-btn");
-  if (btn) {
-    btn.classList.add("show");
+  if (!btn) {
+    console.log("BOTTONE NON TROVATO");
+    return;
   }
+
+  window.addEventListener("scroll", () => {
+    console.log("scroll:", window.scrollY);
+
+    if (window.scrollY > 50) {
+      btn.classList.add("show");
+    } else {
+      btn.classList.remove("show");
+    }
+  });
+
 });
 
   document.body.style.overflow = "hidden";
