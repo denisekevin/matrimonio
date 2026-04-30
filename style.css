@@ -663,7 +663,6 @@ button {
   color: white;
 
   padding: 14px 20px;
-  border-radius: 30px;
 
   font-size: 14px;
   text-decoration: none;
@@ -672,11 +671,19 @@ button {
 
   z-index: 999;
   transition: all 0.3s ease;
+  border-radius: 50px;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+
+  transition: all 0.3s ease;
 }
 
 /* HOVER */
 .floating-btn:hover {
   transform: translateY(-3px);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 
