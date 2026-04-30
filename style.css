@@ -659,35 +659,26 @@ button {
   bottom: 20px;
   right: 20px;
 
-  background: linear-gradient(135deg, #c8a2c8, #9dcf9d);
+  background: #c8a2c8;
   color: white;
 
   padding: 14px 20px;
   border-radius: 30px;
 
-  font-size: 14px;
-  text-decoration: none;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-
   z-index: 999;
 
-  /* 👇 ANIMAZIONE */
-  opacity: 1;
-  transform: translateY(80px); /* parte da sotto */
+  opacity: 0;
+  transform: translateY(80px);
   pointer-events: none;
 
   transition: all 0.4s ease;
 }
 
-
-/* HOVER */
-.floating-btn:hover {
-  transform: translateY(0px);
+.floating-btn.show {
   opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
-
 
 @media (max-width: 768px) {
 
