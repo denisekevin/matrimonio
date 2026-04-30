@@ -1,6 +1,17 @@
 // ASPETTA IL CARICAMENTO
 window.addEventListener("load", function () {
 
+  
+const btn = document.querySelector(".floating-btn");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {  // 👈 dopo il logo
+    btn.classList.add("show");
+  } else {
+    btn.classList.remove("show");
+  }
+});
+
   document.body.style.overflow = "hidden";
 
   const video = document.getElementById("bg-video");
