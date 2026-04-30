@@ -2,13 +2,12 @@
 window.addEventListener("load", function () {
 
   
-const btn = document.querySelector(".floating-btn");
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".floating-btn");
+  if (btn) {
     btn.classList.add("show");
-  } else {
-    btn.classList.remove("show");
   }
 });
 
