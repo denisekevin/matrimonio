@@ -2,27 +2,38 @@
 window.addEventListener("load", function () {
 
   
-
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  const btn = document.querySelector(".floating-btn");
-  if (!btn) {
-    console.log("BOTTONE NON TROVATO");
+  const floatingBtn = document.querySelector('.floating-btn');
+
+  if (!floatingBtn) {
+    console.log("BOTTONE NON TROVATO ❌");
     return;
   }
 
-  window.addEventListener("scroll", () => {
-    console.log("scroll:", window.scrollY);
-
-    if (window.scrollY > 50) {
-      btn.classList.add("show");
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      floatingBtn.classList.add('show');
     } else {
-      btn.classList.remove("show");
+      floatingBtn.classList.remove('show');
     }
   });
 
 });
+
+
+const floatingBtn = document.querySelector('.floating-btn');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 500) {
+    floatingBtn.classList.add('show');
+  } else {
+    floatingBtn.classList.remove('show');
+  }
+});
+
+
+
 
   document.body.style.overflow = "hidden";
 
@@ -40,19 +51,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const locationSection = document.getElementById("location");
 
   // FIX iPhone video
-  document.addEventListener("click", () => {
-    if (video) video.play();
-  }, { once: true });
+const intro = document.getElementById("intro");
+const overlay = document.querySelector(".overlay");
+const scrollBtn = document.getElementById("scrollBtn");
 
-  intro.addEventListener("click", () => {
+intro.addEventListener("click", () => {
+
+  // 👉 fai partire il video
   if (video) {
     video.muted = true;
-    video.play().then(() => {
-      console.log("Video partito ✅");
-    }).catch(err => {
-      console.log("Bloccato ❌", err);
-    });
+    video.play();
   }
+
+  // 👉 nasconde il testo in modo elegante
+  setTimeout(() => {
+    overlay.classList.add("fade-out");
+  }, 200);
+
+  // 👉 chiude l’intro (animazione cerchio)
+  setTimeout(() => {
+    intro.classList.add("reveal");
+  }, 400);
+
+  // 👉 mostra la freccia scroll
+  setTimeout(() => {
+    scrollBtn.style.display = "block";
+  }, 1200);
+
 });
 
 
@@ -146,6 +171,8 @@ document.body.addEventListener("touchstart", () => {
       locationSection.scrollIntoView({ behavior: "smooth" });
     };
   }
+
+  
 
   // ===== SCROLL UNICO (FIX COMPLETO) =====
   window.addEventListener("scroll", () => {
@@ -295,5 +322,7 @@ rows.forEach(row => observer.observe(row));
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  
 
 });
