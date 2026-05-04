@@ -1288,21 +1288,3 @@ section {
   50% { transform: translateY(10px); }
   100% { transform: translateY(0); }
 }
-.sub-text {
-  margin-top: 20px;
-  font-size: 18px;
-  color: #666;
-
-  opacity: 0;
-  transform: translateY(20px);
-
-  animation: fadeSub 1s ease forwards;
-  animation-delay: 3s; /* 👈 appare DOPO le parole */
-}
-
-@keyframes fadeSub {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
