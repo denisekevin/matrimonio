@@ -1,25 +1,6 @@
 // ASPETTA IL CARICAMENTO
 window.addEventListener("load", function () {
 
-  
-document.addEventListener("DOMContentLoaded", () => {
-
-  const floatingBtn = document.querySelector('.floating-btn');
-
-  if (!floatingBtn) {
-    console.log("BOTTONE NON TROVATO ❌");
-    return;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      floatingBtn.classList.add('show');
-    } else {
-      floatingBtn.classList.remove('show');
-    }
-  });
-
-});
 
 
 const floatingBtn = document.querySelector('.floating-btn');
@@ -108,7 +89,6 @@ document.body.addEventListener("touchstart", () => {
     setTimeout(() => {
       intro.style.display = "none";
       document.body.style.overflow = "auto"; // riattiva scroll
-      window.scrollTo(0, 0);
       if (video) video.play();
     }, 1500);
   }
@@ -176,6 +156,16 @@ document.body.addEventListener("touchstart", () => {
 
   // ===== SCROLL UNICO (FIX COMPLETO) =====
   window.addEventListener("scroll", () => {
+const introText = document.querySelector(".intro-text");
+
+if (introText && !introText.classList.contains("animate")) {
+  const pos = introText.getBoundingClientRect().top;
+
+  if (pos < window.innerHeight - 100) {
+    introText.classList.add("animate");
+  }
+}
+
 
     const screenHeight = window.innerHeight;
 
@@ -299,6 +289,11 @@ rows.forEach(row => observer.observe(row));
     }
   }
 
+
+
+
+  
+
   // ===== COUNTDOWN =====
   function updateCountdown() {
     const date = new Date("May 7, 2027 00:00:00").getTime();
@@ -317,7 +312,20 @@ rows.forEach(row => observer.observe(row));
       s.innerText = Math.floor((diff / 1000) % 60);
     }
   }
+const track = document.querySelector('.carousel-track');
+const slides = document.querySelectorAll('.carousel img');
 
+let index = 0;
+
+setInterval(() => {
+  index++;
+
+  if (index >= slides.length) {
+    index = 0;
+  }
+
+  track.style.transform = `translateX(-${index * 100}%)`;
+}, 3000);
   
 
   updateCountdown();
@@ -325,4 +333,98 @@ rows.forEach(row => observer.observe(row));
 
   
 
+});
+document.addEventListener("DOMContentLoaded", () => {
+
+  const chatSection = document.querySelector(".reveal-chat");
+  let chatStarted = false; // 👈 CHIAVE
+
+  const observerChat = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !chatStarted) {
+        chatStarted = true;
+        startChatAnimation();
+
+        observerChat.disconnect(); // 👈 BLOCCA DEFINITIVAMENTE
+      }
+    });
+  }, { threshold: 0.4 });
+
+  if (chatSection) observerChat.observe(chatSection);
+
+
+  function startChatAnimation() {
+    const messages = document.querySelectorAll(".chat-story .msg");
+    const typing = document.querySelector(".chat-story .typing");
+
+    let i = 0;
+
+    function nextMessage() {
+      if (i >= messages.length) return;
+
+      const msg = messages[i];
+
+      if (
+        msg.classList.contains("system") ||
+        msg.classList.contains("highlight")
+      ) {
+        showMsg(msg);
+        i++;
+        setTimeout(nextMessage, 600);
+        return;
+      }
+
+      if (i < messages.length - 2) {
+
+        msg.parentNode.insertBefore(typing, msg);
+
+        typing.classList.remove("left", "right");
+
+        if (msg.classList.contains("right")) {
+          typing.classList.add("right");
+        } else {
+          typing.classList.add("left");
+        }
+
+        typing.style.display = "block";
+
+        setTimeout(() => {
+          typing.style.display = "none";
+          showMsg(msg);
+          i++;
+          setTimeout(nextMessage, 600);
+        }, 1200);
+
+      } else {
+        showMsg(msg);
+        i++;
+        setTimeout(nextMessage, 600);
+      }
+    }
+
+    nextMessage();
+  }
+
+  function showMsg(msg) {
+    msg.style.opacity = 1;
+    msg.style.transform = "translateX(0)";
+  }
+
+  
+
+});
+
+const introText = document.getElementById("introText");
+
+let introDone = false;
+
+window.addEventListener("scroll", () => {
+  if (!introText || introDone) return;
+
+  const pos = introText.getBoundingClientRect().top;
+
+  if (pos < window.innerHeight - 100) {
+    introText.classList.add("show");
+    introDone = true;
+  }
 });
