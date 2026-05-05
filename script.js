@@ -156,6 +156,7 @@ document.body.addEventListener("touchstart", () => {
 
   // ===== SCROLL UNICO (FIX COMPLETO) =====
   window.addEventListener("scroll", () => {
+    
 const introText = document.querySelector(".intro-text");
 
 if (introText && !introText.classList.contains("animate")) {
@@ -419,6 +420,13 @@ const introText = document.getElementById("introText");
 let introDone = false;
 
 window.addEventListener("scroll", () => {
+  document.querySelectorAll(".reveal-img").forEach(el => {
+  const pos = el.getBoundingClientRect().top;
+
+  if (pos < window.innerHeight - 100) {
+    el.classList.add("show");
+  }
+});
   if (!introText || introDone) return;
 
   const pos = introText.getBoundingClientRect().top;
