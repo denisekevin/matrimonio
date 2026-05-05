@@ -754,6 +754,11 @@ button {
     font-size: 38px;
 
   }
+  .story-title {
+
+    padding-top: 120px;
+
+  }
 
 .floating-btn {
     bottom: 15px;
@@ -1384,6 +1389,7 @@ section {
   letter-spacing: 3px;
   color: #7b5fa6;
   margin-bottom: 25px;
+  
 }
 
 .story-title span {
