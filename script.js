@@ -28,6 +28,24 @@ document.querySelectorAll(".reveal, .reveal-img, .intro-text").forEach(el => {
 
 const floatingBtn = document.querySelector('.floating-btn');
 
+  // Mostra floating button immediatamente
+  if (floatingBtn) {
+    floatingBtn.classList.add('show');
+  }
+
+  // Fix floating button - scroll senza nuova scheda
+  if (floatingBtn) {
+    floatingBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const rsvpSection = document.getElementById('rsvp');
+      if (rsvpSection) {
+        rsvpSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      return false;
+    });
+  }
+
 
 const intro = document.getElementById("intro");
 const overlay = document.querySelector(".overlay");
@@ -45,6 +63,13 @@ if (intro) {
   document.body.style.overflow = "auto";
 }
 
+// Se c'è un hash, salta l'intro
+if (window.location.hash && intro) {
+  intro.style.display = 'none';
+  document.body.style.overflow = "auto";
+  if (video) { video.muted = true; video.play(); }
+}
+
 
  
 
@@ -58,7 +83,29 @@ if (scrollBtnTop) {
     });
   });
 }
+document.querySelectorAll(".scroll-next").forEach(arrow => {
 
+  arrow.addEventListener("click", () => {
+
+    const currentSection = arrow.closest("section, .story-block");
+
+    if (!currentSection) return;
+
+    const nextSection = currentSection.nextElementSibling;
+
+    if (nextSection) {
+
+      nextSection.scrollIntoView({
+
+        behavior: "smooth"
+
+      });
+
+    }
+
+  });
+
+});
 
 
 
@@ -223,28 +270,67 @@ window.addEventListener("scroll", () => {
 
   
 
+/* ===== TIMELINE CAROUSEL — effetto luminosità graduale + dots sincronizzati ===== */
 const container = document.querySelector(".timeline-scroll");
 const cards = document.querySelectorAll(".timeline-scroll .timeline-card");
-const dots = document.querySelectorAll(".dot");
+const dots = document.querySelectorAll(".timeline-dots .dot");
+
+function updateTimelineCards() {
+  if (!container || cards.length === 0) return;
+
+  const containerRect = container.getBoundingClientRect();
+  const containerCenter = containerRect.left + containerRect.width / 2;
+  const containerWidth = containerRect.width;
+
+  let closestIndex = 0;
+  let closestDistance = Infinity;
+
+  cards.forEach((card, i) => {
+    const cardRect = card.getBoundingClientRect();
+    const cardCenter = cardRect.left + cardRect.width / 2;
+    const distance = Math.abs(containerCenter - cardCenter);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestIndex = i;
+    }
+
+    // FIX iPhone: maxDist più stretto, fade inizia dopo pochi pixel
+    const maxDist = containerWidth * 0.4; // 40% della larghezza visibile
+    const factor = Math.min(distance / maxDist, 1);
+
+    const opacity = 1 - (factor * 0.55);
+    const scale = 1 - (factor * 0.1);
+    const blur = factor * 3;
+
+    card.style.opacity = opacity.toFixed(3);
+    card.style.transform = `scale(${scale.toFixed(3)})`;
+    card.style.filter = `blur(${blur.toFixed(2)}px)`;
+  });
+
+  if (dots.length > 0) {
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[closestIndex]) {
+      dots[closestIndex].classList.add("active");
+    }
+  }
+}
 
 if (container) {
+  // Usa requestAnimationFrame per performance fluide
+  let ticking = false;
   container.addEventListener("scroll", () => {
-    let center = container.scrollLeft + container.offsetWidth / 2;
-
-    cards.forEach((card, i) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-
-      if (Math.abs(center - cardCenter) < card.offsetWidth / 2) {
-        card.classList.add("active");
-
-        dots.forEach(dot => dot.classList.remove("active"));
-        if (dots[i]) dots[i].classList.add("active");
-
-      } else {
-        card.classList.remove("active");
-      }
-    });
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateTimelineCards();
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
+
+  // Inizializza subito
+  updateTimelineCards();
 }
 
 const rows = document.querySelectorAll(".timeline-row");
@@ -474,4 +560,3 @@ let introDone = false;
 if (!isMobile) {
   document.body.style.willChange = "transform";
 }
-

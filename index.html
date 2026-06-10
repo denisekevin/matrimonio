@@ -13,6 +13,10 @@
   }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -43,18 +47,13 @@
     <p>07 Maggio 2027</p>
   </div>
 
-  <div class="scroll-down" id="scrollBtn">
-    ↓
-    <span>Scorri</span>
-  </div>
+  <div class="scroll-next">
+  ↓
+  <span>Scorri</span>
+</div>
 </section>
 
-<div id="countdown" reveal>
-  <div class="countdown-box"><span id="days">0</span><p>Giorni</p></div>
-  <div class="countdown-box"><span id="hours">0</span><p>Ore</p></div>
-  <div class="countdown-box"><span id="minutes">0</span><p>Minuti</p></div>
-  <div class="countdown-box"><span id="seconds">0</span><p>Secondi</p></div>
-</div>
+
 
 <div class="intro-text">
   <span>Benvenuto</span>
@@ -62,7 +61,10 @@
   <span>nostra</span>
   <span>storia</span>
   
-  <div class="scroll-arrow">↓</div>
+  <div class="scroll-next">
+  ↓
+  <span>Scorri</span>
+</div>
 </div>
 
 <section class="story-block">
@@ -81,7 +83,7 @@
 
     <p>
       Diciamoci la verità: siamo qui solo grazie alla leggendaria  
-      <strong>testardaggine di Denise</strong>.
+      testardaggine di Denise.
     </p>
 
     <p>
@@ -94,9 +96,12 @@
   <div class="story-image reveal-img">
   <img src="assets/image.png" alt="La nostra storia">
   </div>
+  <div class="scroll-next">
+  ↓
+  <span>Scorri</span>
+</div>
 
-  <div class="scroll-arrow">↓</div>
-
+ 
 </section>
 
 <!-- CHAT -->
@@ -150,7 +155,11 @@
     </div>
 
   </div>
-  <div class="scroll-arrow">↓</div>
+  
+<div class="scroll-next">
+  ↓
+  <span>Scorri</span>
+</div>
 </section>
 
 <section class="story-block alt">
@@ -184,7 +193,14 @@
 
   </div>
 
-  <div class="scroll-arrow">↓</div>
+  <div class="story-image reveal-img">
+  <img src="assets/kevin.png" alt="La nostra storia">
+  </div>
+
+  <div class="scroll-next">
+  ↓
+  <span>Scorri</span>
+</div>
 
 </section>
 
@@ -277,6 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <h2>Timeline</h2>
   
   <div class="timeline-scroll">
+  <div class="timeline-spacer"></div>
 
   <div class="timeline-card">
     <img src="assets/location/timeline_1.jpg">
@@ -334,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <p>Si aprono le danze! Festeggiate, ballate e divertitevi insieme a noi 🎉</p>
     </div>
   </div>
+  <div class="timeline-spacer"></div>
 
 </div>
 <div class="timeline-dots">
@@ -344,6 +362,10 @@ document.addEventListener("DOMContentLoaded", function() {
   <span class="dot"></span>
   <span class="dot"></span>
 </div>
+  <div class="scroll-next" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">
+    ↓
+    <span>Scorri</span>
+  </div>
 </section>
 
 
@@ -357,6 +379,14 @@ document.addEventListener("DOMContentLoaded", function() {
     vi chiediamo gentilmente di confermare la vostra partecipazione.
   </p>
 </section>
+
+
+<div id="countdown" reveal>
+  <div class="countdown-box"><span id="days">0</span><p>Giorni</p></div>
+  <div class="countdown-box"><span id="hours">0</span><p>Ore</p></div>
+  <div class="countdown-box"><span id="minutes">0</span><p>Minuti</p></div>
+  <div class="countdown-box"><span id="seconds">0</span><p>Secondi</p></div>
+</div>
 <div class="message-box">
 <section id="rsvp">
   <h2>Conferma partecipazione</h2>
@@ -393,10 +423,13 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
 
   <button type="submit" class="btn-premium">Conferma presenza</button>
-
 </form>
 </section>
-</div>
+
+<footer class="wedding-footer">
+  <p>Denise & Kevin — 07 Maggio 2027</p>
+  <p class="footer-sub">Grazie per essere parte della nostra storia 💜</p>
+</footer>
 
 <a href="#rsvp" class="floating-btn">
   <span>Conferma presenza</span>
