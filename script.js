@@ -45,12 +45,7 @@ const floatingBtn = document.querySelector('.floating-btn');
 
 
 const intro = document.getElementById("intro");
-const overlay = document.querySelector(".overlay");
-setTimeout(() => {
 
-  overlay?.classList.add("show");
-
-}, 800);
 const video = document.getElementById("bg-video");
 
 // blocca scroll SOLO se intro esiste
@@ -118,16 +113,7 @@ if (intro) {
   document.body.style.overflow = "auto";
 }
 
-  // TESTO HERO
-  setTimeout(() => {
-    if (overlay) {
-      overlay.classList.add("fade-out");
 
-      setTimeout(() => {
-        overlay.style.display = "none";
-      }, 3000);
-    }
-  }, 6000);
 
   // FRECCIA
   setTimeout(() => {
@@ -158,10 +144,7 @@ if (seal) {
       });
     }
 
-    // 🌫 fade overlay
-    setTimeout(() => {
-      overlay.classList.add("fade-out");
-    }, 200);
+
 
     // 🎬 reveal intro
     setTimeout(() => {
@@ -513,3 +496,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const introText = document.querySelector(".intro-text");
 let introDone = false;
+// ===== GALLERIA LIGHTBOX =====
+// ===== GALLERIA LIGHTBOX =====
+const galleryItems = document.querySelectorAll('.gallery-item');
+const body = document.body;
+
+const lightbox = document.createElement('div');
+lightbox.className = 'gallery-lightbox';
+lightbox.innerHTML = `
+  <span class="close-btn">&times;</span>
+  <img src="" alt="Gallery image">
+`;
+body.appendChild(lightbox);
+
+const lightboxImg = lightbox.querySelector('img');
+const closeBtn = lightbox.querySelector('.close-btn');
+
+galleryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    lightboxImg.src = img.src;
+    lightbox.classList.add('active');
+    body.style.overflow = 'hidden';
+  });
+});
+
+closeBtn.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+  body.style.overflow = '';
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    lightbox.classList.remove('active');
+    body.style.overflow = '';
+  }
+});
