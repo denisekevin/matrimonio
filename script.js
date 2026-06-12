@@ -28,10 +28,7 @@ document.querySelectorAll(".reveal, .reveal-img, .intro-text").forEach(el => {
 
 const floatingBtn = document.querySelector('.floating-btn');
 
-  // Mostra floating button immediatamente
-  if (floatingBtn) {
-    floatingBtn.classList.add('show');
-  }
+
 
   // Fix floating button - scroll senza nuova scheda
   if (floatingBtn) {
@@ -74,6 +71,7 @@ if (window.location.hash && intro) {
  
 
 const scrollBtnTop = document.getElementById("scrollBtn");
+const scrollBtn = document.querySelector(".scroll-next");
 
 if (scrollBtnTop) {
   scrollBtnTop.addEventListener("click", () => {
@@ -112,30 +110,10 @@ document.querySelectorAll(".scroll-next").forEach(arrow => {
   const locationSection = document.getElementById("location");
 
 
+// Click disabilitato - sigillo si apre automaticamente
 if (intro) {
-  intro.addEventListener("click", () => {
-
-    document.body.style.overflow = "auto";
-
-    if (video) {
-      video.muted = true;
-      video.play();
-    }
-
-    setTimeout(() => {
-      overlay?.classList.add("fade-out");
-    }, 200);
-
-    setTimeout(() => {
-      intro.classList.add("reveal");
-    }, 400);
-
-    setTimeout(() => {
-      scrollBtn.style.display = "block";
-    }, 1200);
-
-  });
-} else {
+  // Nessun click listener, l'apertura è automatica
+}else {
   // fallback sicurezza
   document.body.style.overflow = "auto";
 }
@@ -162,17 +140,22 @@ if (intro) {
 
 const seal = document.getElementById("sealBtn");
 if (seal) {
-  seal.addEventListener("click", () => {
-
+  // 🎬 Sigillo si apre automaticamente dopo 2.5 secondi
+  setTimeout(() => {
+    
     seal.classList.add("open");
 
     // 🔓 sblocca scroll
     document.body.style.overflow = "auto";
 
     // 🎥 avvia video
-    if (video) {
+       if (video) {
       video.muted = true;
-      video.play();
+      video.playsinline = true;
+      video.play().catch(() => {
+        // Safari a volte blocca, riprova
+        setTimeout(() => video.play(), 100);
+      });
     }
 
     // 🌫 fade overlay
@@ -190,9 +173,8 @@ if (seal) {
       scrollBtn.style.display = "block";
     }, 1200);
 
-  });
+  }, 2500); // 2.5 secondi di attesa
 }
-
   
 let ticking = false;
 
@@ -218,10 +200,10 @@ window.addEventListener("scroll", () => {
 
             video.style.filter = `blur(${blur}px) brightness(${brightness})`;
           }
-
       // ===== FLOATING BUTTON =====
+      // Appare dopo aver scrollato 300px (stile WhatsApp)
       if (floatingBtn) {
-        if (window.scrollY > 500) {
+        if (window.scrollY > 300) {
           floatingBtn.classList.add('show');
         } else {
           floatingBtn.classList.remove('show');
@@ -278,6 +260,7 @@ const dots = document.querySelectorAll(".timeline-dots .dot");
 function updateTimelineCards() {
   if (!container || cards.length === 0) return;
 
+  // FIX: Usa coordinate assolute della viewport per entrambi
   const containerRect = container.getBoundingClientRect();
   const containerCenter = containerRect.left + containerRect.width / 2;
   const containerWidth = containerRect.width;
@@ -295,8 +278,8 @@ function updateTimelineCards() {
       closestIndex = i;
     }
 
-    // FIX iPhone: maxDist più stretto, fade inizia dopo pochi pixel
-    const maxDist = containerWidth * 0.4; // 40% della larghezza visibile
+    // FIX: maxDist più stretto per schermi piccoli
+    const maxDist = containerWidth * 0.4;
     const factor = Math.min(distance / maxDist, 1);
 
     const opacity = 1 - (factor * 0.55);
@@ -525,38 +508,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function setBodyHeight() {
-    document.body.style.height = document.documentElement.scrollHeight + "px";  }
-
-const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-if (!isMobile) {
-
-  let currentScroll = 0;
-  let targetScroll = 0;
-  let ease = 0.08;
-
-  function smoothScroll() {
-    targetScroll = window.scrollY;
-    currentScroll += (targetScroll - currentScroll) * ease;
-
-    document.body.style.transform = `translateY(-${currentScroll}px)`;
-
-    requestAnimationFrame(smoothScroll);
-  }
-
- 
-
-  setBodyHeight();
-  window.addEventListener("resize", setBodyHeight);
-
-  smoothScroll();
-}
+// Smooth scroll nativo gestito da CSS (html { scroll-behavior: smooth })
+// RIMOSSO: smooth scroll custom che causava spazio vuoto sotto il body
 
 const introText = document.querySelector(".intro-text");
-
 let introDone = false;
-
-if (!isMobile) {
-  document.body.style.willChange = "transform";
-}

@@ -14,9 +14,7 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <base target="_blank">
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
+
 </head>
 <body>
 
@@ -33,19 +31,19 @@
 </div>
 
 <section class="hero">
-  <video id="bg-video" autoplay muted loop playsinline>
+  <video id="bg-video" autoplay muted loop playsinline 
+    x-webkit-airplay="deny" 
+    disablepictureinpicture
+    controlsList="nodownload noremoteplayback"
+    preload="auto">
     <source src="assets/video.mp4" type="video/mp4">
-  </video>
+</video>
 
 
   
   <div class="dark-overlay"></div>
 
-  <div class="overlay">
-    <h1>Denise & Kevin</h1>
-    <div class="line"></div>
-    <p>07 Maggio 2027</p>
-  </div>
+
 
   <div class="scroll-next">
   ↓
@@ -375,8 +373,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <section class="rsvp-section">
   <p class="rsvp-text">
-    Non vediamo l’ora di festeggiare insieme a voi: 
-    vi chiediamo gentilmente di confermare la vostra partecipazione.
+    <strong>COSA DOVETE FARE VOI:</strong>
+    <p>La vostra missione è semplice: venite, mangiate anche l’intonaco per giustificare il catering e fate finta di non vedere la sposa che controlla il cronometro. 
+      <p>La vostra presenza renderà tutto indimenticabile... o almeno aiuterà lo sposo a dimenticare che, da oggi la sua agenzia non sarà mai più libera.</p>
+
+Siate puntuali alle ore 13:30: Se arrivate in ritardo di 30 secondi, la Sposa vi depennerà dall'esistenza secondo il comma 4 del suo Manuale dell'Organizzazione Perfetta.
+
+<p><strong>Nota per gli invitati: <p>Si prega di confermare entro il 31/12/2026</p></strong></p></p>Non provate a rispondere che siete 'Full'
   </p>
 </section>
 
@@ -390,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="message-box">
 <section id="rsvp">
   <h2>Conferma partecipazione</h2>
-  <form id="form" class="form-premium">
+  <form id="form" class="form-premium" action="javascript:void(0)">
 
   <div class="input-group">
     <input type="text" name="nome" required>
@@ -429,10 +432,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <footer class="wedding-footer">
   <p>Denise & Kevin — 07 Maggio 2027</p>
   <p class="footer-sub">Grazie per essere parte della nostra storia 💜</p>
+  <p class="footer-sub">Creato totalmente da Kevin</p>
 </footer>
 
 <a href="#rsvp" class="floating-btn">
-  <span>Conferma presenza</span>
+  Conferma presenza
 </a>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="script.js"></script>
