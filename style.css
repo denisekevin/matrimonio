@@ -14,7 +14,6 @@ body {
   font-family: 'Montserrat', sans-serif;
   color: #333;
   background: #faf9fb;
-  will-change: transform;
 }
 
 
@@ -671,47 +670,10 @@ button {
 
 
 
-.floating-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 
-  padding: 14px 22px;
 
-  background: linear-gradient(135deg, #c8a2c8, #6285ef);
-  color: white;
 
-  border-radius: 50px;
-  text-decoration: none;
 
-  font-size: 14px;
-  letter-spacing: 1px;
-
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-
-  z-index: 999;
-
-  cursor: pointer;
-
-  transition: all 0.3s ease;
-
-  opacity: 0;
-  transform: translateY(80px);
-  pointer-events: none;
-}
-
-/* hover elegante */
-.floating-btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-}
-
-/* stato visibile */
-.floating-btn.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
 
 @media (max-width: 768px) {
 
@@ -726,12 +688,6 @@ button {
 
   }
 
-.floating-btn {
-    bottom: 15px;
-    right: 15px;
-    padding: 12px 18px;
-    font-size: 13px;
-  }
 
   
 /* ===== TIMELINE MOBILE ===== */
@@ -1461,6 +1417,7 @@ section {
   box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
 
+
 .contact-name {
   font-weight: 600;
 }
@@ -1502,7 +1459,11 @@ section {
   }
 }
 
-
+  .wedding-footer {
+    text-align: center;
+    padding: 30px 16px 80px; /* spazio per floating button */
+    background: #f8f5f1;
+  }
 /* ===== MOBILE FULLSCREEN - AGGIUNTO IN FONDO ===== */
 @media (max-width: 768px) {
 
@@ -1810,47 +1771,15 @@ section {
   /* Floating button fisso in basso come barra */
 @media (max-width: 768px) {
 
-.floating-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 
-  width: auto;
-  padding: 14px 22px;
 
-  border-radius: 50px;
-  background: linear-gradient(135deg, #c8a2c8, #6285ef);
-  color: #fff;
-
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-  z-index: 9999;
-
-  opacity: 0;
-  transform: translateY(80px);
-  pointer-events: none;
-
-  transition: all .35s ease;
-}
-
-.floating-btn.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
 
 
 
     .wedding-footer {
     padding: 40px 20px 100px; /* 👈 spazio in basso per il bottone */
   }
-  .floating-btn.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
 }
 
 /* ===== NUOVI STILI AGGIUNTI ===== */
@@ -1934,12 +1863,7 @@ section {
   margin: 0 auto;
 }
 
-/* Floating button sempre visibile */
-.floating-btn.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
+
 }
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
@@ -2068,7 +1992,6 @@ section {
   grid-row: 3;
 }
 
-/* ===== LIGHTBOX A SCHERMO INTERO ===== */
 .gallery-lightbox {
   position: fixed;
   top: 0;
@@ -2083,6 +2006,15 @@ section {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  /* NESSUN padding qui - il padding sposta il contenuto flex */
+}
+.gallery-lightbox .lightbox-content {
+  position: relative;
+  width: 90vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .gallery-lightbox.active {
@@ -2091,12 +2023,17 @@ section {
 }
 
 .gallery-lightbox img {
-  max-width: 100%;
-  max-height: 100%;
-  width: 100%;
-  height: 100%;
+
+  /* Limiti espliciti che funzionano sempre */
+  max-width: 90vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  
+  /* Margini per tenere l'immagine lontana dai bordi e dalla X */
+  margin: 60px auto 20px;
+  
   object-fit: contain;
-  padding: 60px 20px 20px;
 }
 
 /* X per chiudere */
@@ -2181,9 +2118,19 @@ section {
     font-size: 1.8rem;
   }
   
-  .gallery-lightbox img {
-    padding: 50px 10px 10px;
-  }
+ .gallery-lightbox img {
+
+  /* Limiti espliciti che funzionano sempre */
+  max-width: 90vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  
+  /* Margini per tenere l'immagine lontana dai bordi e dalla X */
+  margin: 60px auto 20px;
+  
+  object-fit: contain;
+}
   
   .gallery-lightbox .close-btn {
     top: 10px;

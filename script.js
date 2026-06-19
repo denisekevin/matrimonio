@@ -498,37 +498,72 @@ const introText = document.querySelector(".intro-text");
 let introDone = false;
 // ===== GALLERIA LIGHTBOX =====
 // ===== GALLERIA LIGHTBOX =====
-const galleryItems = document.querySelectorAll('.gallery-item');
-const body = document.body;
+// ===== GALLERIA LIGHTBOX =====
+document.addEventListener('DOMContentLoaded', () => {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const body = document.body;
 
-const lightbox = document.createElement('div');
-lightbox.className = 'gallery-lightbox';
-lightbox.innerHTML = `
-  <span class="close-btn">&times;</span>
-  <img src="" alt="Gallery image">
-`;
-body.appendChild(lightbox);
+  if (galleryItems.length === 0) return;
 
-const lightboxImg = lightbox.querySelector('img');
-const closeBtn = lightbox.querySelector('.close-btn');
+  const lightbox = document.createElement('div');
+  lightbox.className = 'gallery-lightbox';
+  lightbox.innerHTML = `
+    <span class="close-btn">&times;</span>
+    <div class="lightbox-content">
+      <img src="" alt="Gallery image">
+    </div>
+  `;
+  body.appendChild(lightbox);
+
+  const lightboxImg = lightbox.querySelector('img');
+  const closeBtn = lightbox.querySelector('.close-btn');
 
 galleryItems.forEach(item => {
   item.addEventListener('click', () => {
     const img = item.querySelector('img');
+    if (!img || !img.src) return;
+
+    // Aspetta che l'immagine sia caricata prima di mostrare il lightbox
     lightboxImg.src = img.src;
-    lightbox.classList.add('active');
-    body.style.overflow = 'hidden';
+    
+    // Se l'immagine è già in cache, mostra subito
+    if (lightboxImg.complete && lightboxImg.naturalWidth > 0) {
+      lightbox.classList.add('active');
+      body.style.overflow = 'hidden';
+    } else {
+      // Altrimenti aspetta il caricamento
+      lightboxImg.onload = () => {
+        lightbox.classList.add('active');
+        body.style.overflow = 'hidden';
+        lightboxImg.onload = null; // pulisci l'handler
+      };
+      // Fallback: mostra comunque dopo 500ms se non carica
+      setTimeout(() => {
+        if (!lightbox.classList.contains('active')) {
+          lightbox.classList.add('active');
+          body.style.overflow = 'hidden';
+        }
+      }, 500);
+    }
   });
 });
 
-closeBtn.addEventListener('click', () => {
-  lightbox.classList.remove('active');
-  body.style.overflow = '';
-});
-
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) {
+  closeBtn.addEventListener('click', () => {
     lightbox.classList.remove('active');
     body.style.overflow = '';
-  }
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+      body.style.overflow = '';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      body.style.overflow = '';
+    }
+  });
 });
