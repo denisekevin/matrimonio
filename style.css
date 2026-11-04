@@ -2146,4 +2146,19 @@ section {
     width: 45px;
     height: 45px;
   }
+    .hero {
+    width: 100%;
+    height: 100svh;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  #bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
